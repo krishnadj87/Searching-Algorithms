@@ -1,0 +1,61 @@
+{% extends "emp_app/base.html" %}
+{% load static %}
+
+{% block title %}
+Forms
+{% endblock title %}
+
+{% block css_link %}
+    <link rel="stylesheet" href="{% static 'emp_app/css/form_style.css' %}">
+
+{% endblock css_link %}
+
+
+
+
+{% block form  %}
+
+{% if form.errors %}
+<style>
+    .form-container{
+        margin-top: 300px;
+    }
+</style>
+{% endif  %}
+
+<div class="form-container" id='myform'>
+    <h2 class="formh2">Add Employee!</h2>
+    <form action="" method='post'  enctype='multipart/form-data'>
+        {{form.non_field_errors}}
+        {% csrf_token %}
+
+        {% for field in form %}
+            {{field.label_tag}}
+            {{field}}
+
+            {% if field.errors %}
+            <p class="errors" id='userError'><strong> {{field.errors}} </strong></p>
+        {% endif %}  <br>
+        {% endfor %}
+
+        <input type="submit" value = 'Add Employee'><br>
+        <button class='home'>Back to <a href="{% url 'homepage'  %}">homepage</a> </button>
+
+
+
+    </form>
+</div>
+
+<script>
+
+    function openForm(){
+        let form = document.getElementById('myform').style.display = 'block';
+
+    }
+
+    function closeForm(){
+        let form = document.getElementById('myForm').style.display = 'none';
+    }
+</script>
+
+{% endblock form %}

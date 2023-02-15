@@ -1,0 +1,59 @@
+{% extends 'accounts/base.html' %}
+{% load static %}
+{% block title %}Dashboard{% endblock title %}
+{% block main-content %}
+<div class="container my-5">
+
+ <div class="row">
+  <h3>Welcome {{request.user.username|capfirst}}</h3>
+  <div class="col-sm-2 border-end">
+   <ul class="list-unstyled">
+    <li class="d-grid"><a href="{% url 'dashboard' %}" class="btn btn-primary">Dashboard</a></li>
+    <li class="d-grid"><a href="{% url 'update_profile' %}" class="btn">Update Profile</a></li>
+    <li class="d-grid"><a href="{% url 'change_password' %}" class="btn">Change Password</a></li>
+    
+   </ul>
+  </div>
+
+
+ 
+    <div class="col-sm-6 offset-sm-3 shadow" style='border:none;'>
+    
+      <style>
+        #profile{
+          align-items: center;
+          margin-left: 160px;
+          border: none;
+          border-radius: 450px;
+        
+        }
+        .inline{
+          display: inline;
+          margin-left: 70px;
+        }
+        
+      </style>
+    <div class="" >
+      {% if  profile.pic %}
+    <img id='profile' height=250px  width=250px src="{{profile.pic.url}}"  class='text-center' height= width='400px' class="card-img-top" alt="..."> 
+
+      
+      {% else %}
+    <img id='profile' height=250px  width=250px src="{% static 'images/download.png' %}"  class='text-center' height= width='400px' class="card-img-top" alt="...">
+
+
+      {% endif %}
+      <div class="card-body">
+        <h5 class="card-title"><strong>Name: {{request.user.first_name|capfirst}} {{request.user.last_name|capfirst}} </strong>   <p class='inline'> Joined at: {{request.user.date_joined}} </p></h5>
+        <p class="card-text"><strong> Description:</strong> {{profile.bio}}</p>
+      </div>
+    </div>
+         
+             
+
+
+  
+ </div>
+</div>
+{% endblock main-content %}
+

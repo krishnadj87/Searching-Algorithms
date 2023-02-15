@@ -1,0 +1,139 @@
+{% extends "emp_app/base.html" %}
+{% load static %}
+
+{% block title %}
+Home page
+{% endblock title %}
+
+{% block css_link %}
+ <link rel="stylesheet" href="{% static 'emp_app/css/home_style.css' %}">
+ {% endblock css_link %}
+
+
+{% block main_content %}
+
+<h2 class="hdr" >
+    Employee Management System </h2>
+</div>
+
+<div class="additional">
+
+   <form action="{% url 'employeesFilter' 'by'  %}" method='post'>
+    {% csrf_token %}
+    <input class="search" name='filters' type="text" placeholder="Search here ... ">
+   </form>
+
+   <button class="btn" id="newemp"><a href="{% url 'addEmployees'  %}">Add New</a></button>
+   
+
+   <div class="dropdown">
+       <button class="dropbtn">Filters</button>
+      
+       <div class="dropdown-content">
+           <a href="{% url 'details' 'recent' %}">Recent Post</a>
+           <a href="{% url 'details' 'max' %}">Maximum Salary</a>
+           <a href="{% url 'details' 'min'  %} ">Minimum Salary</a>
+           <a href="{% url 'details' 'all'  %} ">All Data</a>
+       </div>
+       
+
+
+   </div>
+
+       <!----- MSG Framework for messaging ----->
+        {% if messages %}
+            {% for message in messages %}
+
+                {% if message.tags %}
+                <p class='center' ><strong> {{message}}</strong></p>
+                {% endif %}
+
+            {% endfor %}
+
+        {% endif %}
+
+</div>
+
+<div style="overflow-x: auto;">
+
+ <table>
+   <tr >
+     <th>Id</th>
+     <th>Image</th>
+     <th>Name</th>
+     <th>Salary</th>
+     <th>Department</th>
+
+     <th>Email</th>
+     <th>Joining Date</th>
+
+     <th>Actions</th>
+   </tr>
+
+     <!----- Td Data here ------>
+     
+        {% for emp in page_obj %}
+            <tr class="trhvr">
+            <td>{{emp.id}}</td>
+            <td><img class="userimg" src="{{emp.image.url}}" alt=""></td>
+            <td>{{emp.name}}</a> </td>
+            <td>{{emp.salary}}</td>
+            <td><a href="{% url 'details'  emp.dept %}">{{emp.dept}}</a></td>
+            <td>{{emp.email}}</td>
+            <td>{{emp.join_date}}</td>
+
+            <!---- update and delete buttons ----->
+            <td class='actionbtn'>
+               
+                    <a href="{% url 'update_employee' emp.id %}">Update</a>
+
+                    <a class='delete' href="{% url 'deleteEmployee' emp.id %}">Delete</a>
+                   
+                </button>
+            </td>
+        
+            </tr>
+
+        {% endfor  %}
+    
+   
+
+
+
+     <!-----END Td Data here ------>
+
+
+ 
+  
+ </table>
+
+
+</div>
+
+<div class="pagecenter">
+    <div class="pagination">
+
+        {% if page_obj.has_previous %}
+            <a href="#">&laquo;</a>
+        {% endif %}
+
+        {% if page_obj.number.has_previous %}
+            <a href="#" class="">{{page_obj.number.previous_page_number}} </a>
+        {% endif %}
+        
+            <a href="#" class="active">{{page_obj.number}} </a>
+
+        {% if page_obj.has_next %}
+            
+            <a href="#">{{page_obj.next_page_number}} </a>
+            <a href="#">&raquo;</a>
+
+        {% endif %}
+    </div>
+ </div>
+
+</div>
+   
+
+
+{% endblock main_content  %}

@@ -1,0 +1,51 @@
+{% extends "emp_app/base.html" %}
+{% load static %}
+
+{% block title %}
+Forms
+{% endblock title %}
+
+{% block form  %}
+
+{% if form.errors %}
+<style>
+    .form-container{
+        margin-top: 300px;
+    }
+</style>
+{% endif  %}
+
+<div class="form-container" id='myform'>
+    <h2 class="formh2">Welcome back!</h2>
+    <form action="" method='post' novalidate  enctype='multipart/form-data'>
+        {{form.non_field_errors}}
+        {% csrf_token %}
+
+        {% for field in form %}
+            {{field.label_tag}}
+            {{field}}
+
+            {% if field.errors %}
+                <p class="errors" id='userError'>{{field.errors}}</p>
+            {% endif %}  <br>
+        {% endfor %}
+
+        <input type="submit" value = 'login'>
+
+
+    </form>
+</div>
+
+<script>
+
+    function openForm(){
+        let form = document.getElementById('myform').style.display = 'block';
+
+    }
+
+    function closeForm(){
+        let form = document.getElementById('myForm').style.display = 'none';
+    }
+</script>
+
+{% endblock form %}
