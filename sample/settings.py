@@ -76,18 +76,17 @@ TEMPLATES = [
 WSGI_APPLICATION = 'sample.wsgi.application'
 
 
-# PostGreSQL Database  Configuration here
+# Database
+# https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME':  'employees2db',
-        'HOST':  'localhost',
-        'USER':  'django_user',
-        'PASSWORD' : '1234',
-        'PORT':    '5432'
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3' ,
     }
 }
+
+
 
 
 # Password validation
